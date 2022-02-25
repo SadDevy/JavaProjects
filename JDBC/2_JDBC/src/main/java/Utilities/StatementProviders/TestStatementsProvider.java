@@ -1,4 +1,4 @@
-package Utilities.CommandProviders;
+package Utilities.StatementProviders;
 
 import Entities.Test;
 
@@ -25,22 +25,22 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     private static final String getMaxTestIdQuery =
 """
 SELECT
-    MAX(T.Id)
+    MAX(T."Id")
 FROM "Tests" AS T
 """;
 
     private static final String removeTestQuery =
 """
 DELETE FROM "Tests"
-WHERE Id = ?
+WHERE "Id" = ?
 """;
 
     private static final String testExistsQuery =
 """
-SELECT 
+SELECT
     COUNT(T."Id") > 0
 FROM "Tests" AS T
-WHERE T.Id = ?
+WHERE T."Id" = ?
 """;
 
     public static Test exportFromDb(Connection connection, int id)
@@ -76,7 +76,7 @@ WHERE T.Id = ?
     public static int importToDb(Connection connection, Test test)
             throws SQLException {
         try (PreparedStatement statement = getImportStatement(connection, test)) {
-            statement.executeQuery();
+            statement.executeUpdate();
 
             return getMaxTestId(connection);
         }
@@ -131,7 +131,7 @@ WHERE T.Id = ?
     public static void removeFromDb(Connection connection, int id)
             throws SQLException {
         try (PreparedStatement statement = getRemoveStatement(connection, id)) {
-            statement.executeQuery();
+            statement.executeUpdate();
         }
     }
 

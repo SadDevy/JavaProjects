@@ -1,4 +1,4 @@
-package Utilities.CommandProviders;
+package Utilities.StatementProviders;
 
 import Entities.AnswerVariant;
 import Entities.Question;
@@ -17,11 +17,10 @@ public class StatementProvider {
         if (query == null)
             throw new IllegalArgumentException("query");
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, id);
 
-            return statement;
-        }
+        return statement;
     }
 
     public static PreparedStatement getTestImportStatement(Connection connection, String query, Test test)
@@ -35,18 +34,17 @@ public class StatementProvider {
         if (test == null)
             throw new IllegalArgumentException("test");
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, test.getName());
-            statement.setString(2, test.getTheory());
-            statement.setString(3, test.getTheoryUrl());
-            statement.setBytes(4, test.getImage());
-            statement.setInt(5, test.getTestTime());
-            statement.setInt(6, test.getQuestionsCount());
-            statement.setInt(7, test.getRightCount());
-            statement.setBoolean(8, test.theoryIsShown());
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, test.getName());
+        statement.setString(2, test.getTheory());
+        statement.setString(3, test.getTheoryUrl());
+        statement.setBytes(4, test.getImage());
+        statement.setInt(5, test.getTestTime());
+        statement.setInt(6, test.getQuestionsCount());
+        statement.setInt(7, test.getRightCount());
+        statement.setBoolean(8, test.theoryIsShown());
 
-            return statement;
-        }
+        return statement;
     }
 
     public static PreparedStatement getQuestionImportStatement(Connection connection, String query, Question question, int testId)
@@ -60,12 +58,11 @@ public class StatementProvider {
         if (question == null)
             throw new IllegalArgumentException("question");
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, testId);
-            statement.setString(2, question.getDescription());
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, testId);
+        statement.setString(2, question.getDescription());
 
-            return statement;
-        }
+        return statement;
     }
 
     public static PreparedStatement getAnswerVariantImportStatement(Connection connection, String query, AnswerVariant answerVariant, int questionId) throws SQLException {
@@ -78,11 +75,11 @@ public class StatementProvider {
         if (answerVariant == null)
             throw new IllegalArgumentException("answerVariant");
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, questionId);
-            statement.setString(2, answerVariant.getDescription());
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, questionId);
+        statement.setString(2, answerVariant.getDescription());
+        statement.setBoolean(3, answerVariant.isCorrected());
 
-            return statement;
-        }
+        return statement;
     }
 }

@@ -1,4 +1,4 @@
-package Utilities.CommandProviders;
+package Utilities.StatementProviders;
 
 import Entities.AnswerVariant;
 
@@ -32,7 +32,7 @@ VALUES(?, ?, ?)
 """
 DELETE FROM "AnswerVariants"
 WHERE "QuestionId" IN (
-    SELECT Q."Id",
+    SELECT Q."Id"
     FROM "Questions" AS Q
     WHERE Q."TestId" = 
         (SELECT T."Id"
@@ -72,7 +72,7 @@ WHERE "QuestionId" IN (
     public static void importToDb(Connection connection, AnswerVariant answerVariant, int questionId)
             throws SQLException {
         try (PreparedStatement statement = getImportStatement(connection, answerVariant, questionId)) {
-            statement.executeQuery();
+            statement.executeUpdate();
         }
     }
 
@@ -90,7 +90,7 @@ WHERE "QuestionId" IN (
     public static void removeFromDb(Connection connection, int id)
             throws SQLException {
         try (PreparedStatement statement = getRemoveStatement(connection, id)) {
-            statement.executeQuery();
+            statement.executeUpdate();
         }
     }
 

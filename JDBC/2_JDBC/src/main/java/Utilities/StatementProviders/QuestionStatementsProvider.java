@@ -1,4 +1,4 @@
-package Utilities.CommandProviders;
+package Utilities.StatementProviders;
 
 import Entities.AnswerVariant;
 import Entities.Question;
@@ -70,7 +70,7 @@ WHERE "TestId" =
     public static int importToDb(Connection connection, Question question, int testId)
             throws SQLException {
         try (PreparedStatement statement = getImportQuestionStatement(connection, question, testId)) {
-            statement.executeQuery();
+            statement.executeUpdate();
 
             return getMaxQuestionId(connection);
         }
@@ -102,7 +102,7 @@ WHERE "TestId" =
     public static void removeFromDb(Connection connection, int id)
             throws SQLException {
         try (PreparedStatement statement = getRemoveStatement(connection, id)) {
-            statement.executeQuery();
+            statement.executeUpdate();
         }
     }
 
