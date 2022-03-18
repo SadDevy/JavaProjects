@@ -1,9 +1,14 @@
 package Utilities;
 
-import DAO.TestDAO;
+import DAO.StudentTestDAO;
+import org.hibernate.SessionFactory;
 
 public class Remover {
-    private final TestDAO testContext = new TestDAO();
+    private StudentTestDAO testContext;
+
+    public Remover(SessionFactory factory) {
+        testContext = new StudentTestDAO(factory);
+    }
 
     public void removeTestFromDb(int id) {
         testContext.remove(id);

@@ -1,21 +1,26 @@
 package Utilities;
 
-import DAO.TestDAO;
-import Entities.Test;
+import DAO.StudentTestDAO;
+import Entities.StudentTest;
+import org.hibernate.SessionFactory;
 
 import java.io.IOException;
 
 public class Exporter {
-    private final TestDAO testContext = new TestDAO();
+    private StudentTestDAO testContext;
+
+    public Exporter(SessionFactory factory) {
+        testContext = new StudentTestDAO(factory);
+    }
 
     public void exportTestToFile(int id, String filePath)
             throws IOException, IllegalArgumentException {
-        Test test = exportTest(id);
+        StudentTest test = exportTest(id);
 
-        Serializer.Serialize(test, filePath);
+        Serializer.serialize(test, filePath);
     }
 
-    private Test exportTest(int id)
+    private StudentTest exportTest(int id)
             throws IllegalStateException {
         return testContext.get(id);
     }

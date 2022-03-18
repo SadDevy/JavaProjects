@@ -1,11 +1,11 @@
 package Utilities;
 
-import Entities.Test;
+import Entities.StudentTest;
 
 import java.io.*;
 
 public class Serializer {
-    public static final void Serialize(Test test, String filePath)
+    public static final void serialize(StudentTest test, String filePath)
             throws IOException, IllegalArgumentException {
         if (filePath == "" || filePath == null)
             throw new IllegalArgumentException("filePath");
@@ -18,7 +18,7 @@ public class Serializer {
         }
     }
 
-    public static final Test Deserialize(String filePath)
+    public static final StudentTest deserialize(String filePath)
         throws IOException, ClassNotFoundException, IllegalArgumentException {
         if (filePath == "" || filePath == null)
             throw new IllegalArgumentException("filePath");
@@ -28,7 +28,7 @@ public class Serializer {
             throw new IllegalArgumentException("filePath");
 
         try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(filePath))) {
-            return (Test) stream.readObject();
+            return (StudentTest) stream.readObject();
         }
     }
 }

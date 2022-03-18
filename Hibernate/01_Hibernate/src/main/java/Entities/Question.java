@@ -3,6 +3,7 @@ package Entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "\"Questions\"")
@@ -12,8 +13,6 @@ public class Question
     @Column(name = "\"Id\"")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //    @Column(name = "\"TestId\"")
-//    private int testId;
     @Column(name = "\"Description\"")
     private String description;
 
@@ -21,18 +20,10 @@ public class Question
     @JoinColumn(name = "\"QuestionId\"")
     private List<AnswerVariant> answerVariants;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "\"TestId\"")
-//    private Test test;
-
     public Question() {
     }
 
-    public Question(
-            int testId,
-            String description
-    ) {
-//        this.testId = testId;
+    public Question(String description) {
         this.description = description;
     }
 
@@ -43,14 +34,6 @@ public class Question
     public void setId(int id) {
         this.id = id;
     }
-
-//    public int getTestId() {
-//        return testId;
-//    }
-//
-//    public void setTestId(int testId) {
-//        this.testId = testId;
-//    }
 
     public String getDescription() {
         return description;
@@ -68,11 +51,29 @@ public class Question
         this.answerVariants = answerVariants;
     }
 
-//    public Test getTest() {
-//        return test;
-//    }
-//
-//    public void setTest(Test test) {
-//        this.test = test;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !isType(o))
+            return false;
+
+        Question question = (Question) o;
+        return id == question.id &&
+                Objects.equals(description, question.description) &&
+                Objects.equals(answerVariants, question.answerVariants);
+    }
+
+    private boolean isType(Object o) {
+        try {
+            Question result = (Question) o;
+
+            return true;
+        } catch (ClassCastException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, answerVariants);
+    }
 }

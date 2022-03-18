@@ -2,6 +2,7 @@ package Entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "\"AnswerVariants\"")
@@ -11,26 +12,18 @@ public class AnswerVariant
     @Column(name = "\"Id\"")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @Column(name = "\"QuestionId\"")
-//    private int questionId;
     @Column(name = "\"Description\"")
     private String description;
     @Column(name = "\"IsCorrected\"")
     private boolean isCorrected;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "\"QuestionId\"")
-//    private Question question;
-
     public AnswerVariant() {
     }
 
     public AnswerVariant(
-            int questionId,
             String description,
             boolean isCorrected
     ) {
-//        this.questionId = questionId;
         this.description = description;
         this.isCorrected = isCorrected;
     }
@@ -42,14 +35,6 @@ public class AnswerVariant
     public void setId(int id) {
         this.id = id;
     }
-
-//    public int getQuestionId() {
-//        return questionId;
-//    }
-//
-//    public void setQuestionId(int questionId) {
-//        this.questionId = questionId;
-//    }
 
     public String getDescription() {
         return description;
@@ -67,11 +52,29 @@ public class AnswerVariant
         isCorrected = corrected;
     }
 
-//    public Question getQuestion() {
-//        return question;
-//    }
-//
-//    public void setQuestion(Question question) {
-//        this.question = question;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !isType(o))
+            return false;
+
+        AnswerVariant that = (AnswerVariant) o;
+        return id == that.id &&
+                isCorrected == that.isCorrected &&
+                Objects.equals(description, that.description);
+    }
+
+    private boolean isType(Object o) {
+        try {
+            AnswerVariant result = (AnswerVariant) o;
+
+            return true;
+        } catch (ClassCastException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, isCorrected);
+    }
 }

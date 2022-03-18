@@ -1,23 +1,26 @@
 package Utilities;
 
-import DAO.TestDAO;
-import Entities.Question;
-import Entities.Test;
+import DAO.StudentTestDAO;
+import Entities.StudentTest;
+import org.hibernate.SessionFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Importer {
-    private final TestDAO testContext = new TestDAO();
+    private StudentTestDAO testContext;
+
+    public Importer(SessionFactory factory) {
+        testContext = new StudentTestDAO(factory);
+    }
 
     public void importTestFromFile(String filePath)
             throws IOException, ClassNotFoundException, IllegalArgumentException {
-        Test test = Serializer.Deserialize(filePath);
+        StudentTest test = Serializer.deserialize(filePath);
 
         importTest(test);
     }
 
-    private void importTest(Test test) {
+    private void importTest(StudentTest test) {
         testContext.add(test);
     }
 }

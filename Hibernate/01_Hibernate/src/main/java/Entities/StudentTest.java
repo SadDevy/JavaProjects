@@ -3,10 +3,11 @@ package Entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "\"Tests\"")
-public class Test
+public class StudentTest
         implements Serializable {
     @Id
     @Column(name = "\"Id\"")
@@ -30,10 +31,10 @@ public class Test
     @JoinColumn(name = "\"TestId\"")
     private List<Question> questions;
 
-    public Test() {
+    public StudentTest() {
     }
 
-    public Test(
+    public StudentTest(
             String name,
             String theory,
             String theoryUrl,
@@ -41,6 +42,24 @@ public class Test
             int questionsCount,
             int rightCount
     ) {
+        this.name = name;
+        this.theory = theory;
+        this.theoryUrl = theoryUrl;
+        this.theoryIsShown = theoryIsShown;
+        this.questionsCount = questionsCount;
+        this.rightCount = rightCount;
+    }
+
+    public StudentTest(
+            int id,
+            String name,
+            String theory,
+            String theoryUrl,
+            boolean theoryIsShown,
+            int questionsCount,
+            int rightCount
+    ) {
+        this.id = id;
         this.name = name;
         this.theory = theory;
         this.theoryUrl = theoryUrl;
@@ -111,5 +130,35 @@ public class Test
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !isType(o))
+            return false;
+
+        StudentTest test = (StudentTest) o;
+        return id == test.id &&
+                theoryIsShown == test.theoryIsShown &&
+                questionsCount == test.questionsCount &&
+                rightCount == test.rightCount &&
+                Objects.equals(name, test.name) &&
+                Objects.equals(theory, test.theory) &&
+                Objects.equals(theoryUrl, test.theoryUrl);
+    }
+
+    private boolean isType(Object o) {
+        try {
+            StudentTest result = (StudentTest) o;
+
+            return true;
+        } catch (ClassCastException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, theory, theoryUrl, theoryIsShown, questionsCount, rightCount, questions);
     }
 }

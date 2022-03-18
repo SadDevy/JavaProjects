@@ -1,25 +1,30 @@
 package DAO;
 
-import Entities.Test;
+import Entities.StudentTest;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import java.text.MessageFormat;
 
-public class TestDAO {
-    private final SessionFactory factory = new Configuration().configure()
-            .addAnnotatedClass(Test.class).buildSessionFactory();
+public class StudentTestDAO {
+//    private final SessionFactory factory = new Configuration().configure()
+//            .addAnnotatedClass(Test.class).buildSessionFactory();
 
-    public void add(Test test) {
+    private SessionFactory factory;
+
+    public StudentTestDAO(SessionFactory factory) {
+        this.factory = factory;
+    }
+
+    public void add(StudentTest test) {
         try (Session session = factory.openSession()) {
             add(session, test);
         }
     }
 
-    private void add(Session session, Test test) {
+    private void add(Session session, StudentTest test) {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -45,7 +50,7 @@ public class TestDAO {
         try {
             transaction = session.beginTransaction();
 
-            Test test = session.get(Test.class, id);
+            StudentTest test = session.get(StudentTest.class, id);
             session.remove(test);
 
             transaction.commit();
@@ -57,20 +62,20 @@ public class TestDAO {
         }
     }
 
-    public Test get(int id)
+    public StudentTest get(int id)
             throws IllegalStateException {
         try (Session session = factory.openSession()) {
             return get(session, id);
         }
     }
 
-    private Test get(Session session, int id)
+    private StudentTest get(Session session, int id)
             throws IllegalStateException {
         Transaction transaction = null;
-        Test test = null;
+        StudentTest test = null;
         try {
             transaction = session.beginTransaction();
-            test = session.get(Test.class, id);
+            test = session.get(StudentTest.class, id);
 
             transaction.commit();
         } catch (HibernateException ex) {
