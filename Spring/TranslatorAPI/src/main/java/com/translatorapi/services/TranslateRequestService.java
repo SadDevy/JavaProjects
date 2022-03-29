@@ -27,6 +27,9 @@ public class TranslateRequestService {
 
     public TranslatedObject translateString(TranslateObject toTranslate)
             throws UnknownHostException {
+        if (toTranslate == null)
+            throw new IllegalArgumentException("toTranslate");
+
         final String sourceLanguage = getSourceLanguage(toTranslate.getLanguage());
         final String targetLanguage = getTargetLanguage(toTranslate.getLanguage());
         final String sourceString = toTranslate.getToTranslate();
@@ -39,11 +42,26 @@ public class TranslateRequestService {
 
     private void addRequestToDb(String sourceText, String translatedText, String language)
             throws UnknownHostException {
+        if (!StringUtils.hasText(sourceText))
+            throw new IllegalArgumentException("sourceText");
+
+        if (!StringUtils.hasText(translatedText))
+            throw new IllegalArgumentException("translatedText");
+
+        if (!StringUtils.hasText(language))
+            throw new IllegalArgumentException("language");
+
         List<WordTranslate> wordsTranslate = getWordsTranslate(sourceText, translatedText);
         databaseService.addTranslateRequest(sourceText, translatedText, language, wordsTranslate);
     }
 
     private List<WordTranslate> getWordsTranslate(String sourceText, String translatedText) {
+        if (!StringUtils.hasText(sourceText))
+            throw new IllegalArgumentException("sourceText");
+
+        if (!StringUtils.hasText(translatedText))
+            throw new IllegalArgumentException("translatedText");
+
         String[] sourceWords = getWords(sourceText);
         String[] translatedWords = getWords(translatedText);
 
