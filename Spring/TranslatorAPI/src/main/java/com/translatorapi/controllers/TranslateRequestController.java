@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.UnknownHostException;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api")
@@ -19,7 +20,7 @@ public class TranslateRequestController {
 
     @PostMapping("/translate")
     public ResponseEntity translate(@RequestBody TranslateObject toTranslate)
-            throws UnknownHostException {
+            throws UnknownHostException, ExecutionException, InterruptedException {
         return ResponseEntity.ok(translateRequestService.translateString(toTranslate));
     }
 }

@@ -76,4 +76,17 @@ public class TranslateRequest {
     public Date getRequestDate() {
         return requestDate;
     }
+
+    @Override
+    public String toString() {
+        return "TranslateRequest{" +
+                "id=" + id +
+                ", sourceText='" + sourceText + '\'' +
+                ", translatedText='" + translatedText + '\'' +
+                ", requestDate=" + requestDate +
+                ", language='" + language + '\'' +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", wordsTranslate=" + wordsTranslate +
+                '}';
+    }
 }

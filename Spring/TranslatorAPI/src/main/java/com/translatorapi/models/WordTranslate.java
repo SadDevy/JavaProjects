@@ -33,4 +33,13 @@ public class WordTranslate {
     public String getTranslated() {
         return translated;
     }
+
+    @Override
+    public String toString() {
+        return "WordTranslate{" +
+                "id=" + id +
+                ", source='" + source + '\'' +
+                ", translated='" + translated + '\'' +
+                '}';
+    }
 }

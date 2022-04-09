@@ -1,6 +1,7 @@
 TranslatorAPI.
 
 Внешний API: https://libretranslate.de/translate
+upd: 20 запросов в минуту
 На вход JSON, например:
 {
     "q": "Hello!",
