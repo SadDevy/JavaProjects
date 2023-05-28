@@ -1,0 +1,119 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-tables
+      author: dave
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            - tableExists:
+                tableName: headers
+            - tableExists:
+                tableName: goods
+            - tableExists:
+                tableName: services
+      changes:
+        - createTable:
+            tableName: headers
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: header_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: logo
+                  type: blob
+              - column:
+                  constraints:
+                    nullable: false
+                  name: background
+                  type: blob
+              - column:
+                  constraints:
+                    nullable: false
+                  name: address
+                  type: varchar(250)
+              - column:
+                  constraints:
+                    nullable: true
+                  name: address_url
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: active
+                  type: boolean
+
+        - createTable:
+            tableName: goods
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: goods_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: varchar(250)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: image
+                  type: blob
+              - column:
+                  constraints:
+                    nullable: false
+                  name: price
+                  type: numeric
+              - column:
+                  constraints:
+                    nullable: true
+                  name: description
+                  type: text
+
+        - createTable:
+            tableName: services
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: service_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: varchar(250)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: image
+                  type: blob
+              - column:
+                  constraints:
+                    nullable: false
+                  name: price
+                  type: numeric
+              - column:
+                  constraints:
+                    nullable: true
+                  name: description
+                  type: text
